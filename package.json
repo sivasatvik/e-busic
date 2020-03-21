@@ -1,9 +1,10 @@
 {
   "name": "e-busic-reader",
   "version": "0.0.1",
-  "description": "An epub-reader with music using ePubJS",
+  "description": "A epub-reader with music using ePubJS",
+  "main": "lib/index.js",
   "scripts": {
-    "compile": "NODE_ENV=production babel --out-dir lib src/modules",
+    "compile": "SET NODE_ENV=production & babel --out-dir lib src/modules",
     "prepare": "npm run compile",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,6 +14,12 @@
     "format": "prettier --write \"src/**/*.js\"",
     "test": "eslint -c .eslintrc src"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivasatvik/e-busic.git"
+  },
+  "author": "Siva Satvik",
+  "license": "ISC",
   "standard": {
     "parser": "babel-eslint"
   },
@@ -59,16 +66,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sivasatvik/e-busic.git"
-  },
-  "author": "Siva Satvik",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sivasatvik/e-busic/issues"
-  },
-  "homepage": "https://github.com/sivasatvik/e-busic#readme"
+  ]
 }
