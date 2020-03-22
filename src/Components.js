@@ -13,10 +13,10 @@ export const Container = styled.div`
 // Container for the book
 export const ReaderContainer = styled.div`
   position: absolute;
-  top: ${props => (props.fullscreen ? 0 : 100)}px;
-  left: ${props => (props.fullscreen ? 0 : 1)}%;
-  right: ${props => (props.fullscreen ? 0 : 1)}%;
-  bottom: ${props => (props.fullscreen ? 0 : 1)}%;
+  top: ${props => (props.fullscreen ? 0 : 50)}px;
+  left: ${props => (props.fullscreen ? 0 : 1)}rem;
+  right: ${props => (props.fullscreen ? 0 : 1)}rem;
+  bottom: ${props => (props.fullscreen ? 0 : 1)}rem;
   transition: all 0.6s ease;
 `;
 
@@ -30,27 +30,6 @@ export const ToolBar = styled.header`
   ${breakpoint("tablet")`
         display: flex;
         align-items: flex-end;
-    `};
-`;
-
-// Wrapper for logo
-export const LogoWrapper = styled.a`
-  ${breakpoint("tablet")`
-        margin-right: auto;
-    `};
-`;
-
-// Skeleton style for logo
-export const Logo = styled.img`
-  width: 50px;
-  height: auto;
-  display: block;
-  margin: 0 auto 0px;
-  ${breakpoint("tablet")`
-        width: 50px;
-        height: 50px;
-        display: inline-block;
-        margin-left: 2px;
     `};
 `;
 

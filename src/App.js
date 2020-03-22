@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
 import FileReaderInput from "react-file-reader-input";
-//import { ReactReader } from "./modules";
+import { Reader } from "./modules";
 import {
   Container,
   ReaderContainer,
@@ -13,6 +13,10 @@ import {
 } from "./Components";
 
 const storage = global.localStorage || null;
+
+const DEMO_URL =
+  "https://gerhardsletten.github.io/react-reader/files/alice.epub";
+const DEMO_NAME = "Alice in wonderland";
 
 // Creating a Global default view style
 const GlobalStyle = createGlobalStyle`
@@ -113,20 +117,20 @@ class App extends Component {
       <Container>
         <GlobalStyle />
         <ToolBar>
-          <LogoWrapper>
-            <Logo />
-          </LogoWrapper>
           <ButtonWrapper>
             <FileReaderInput as="buffer" onChange={this.handleFileChange}>
               <GenericButton> Upload file </GenericButton>
             </FileReaderInput>
-            <GenericButton onClick={this.toggleFullScreen}>
-              Full Screen
-            </GenericButton>
           </ButtonWrapper>
         </ToolBar>
         <ReaderContainer fullscreen={fullscreen}>
-          <h1> Book starts here </h1>
+          <Reader
+            url={localFile || DEMO_URL}
+            title={localName || DEMO_NAME}
+            location={location}
+            locationChanged={this.onLocationChanged}
+            getRendition={this.getRendition}
+          />
         </ReaderContainer>
       </Container>
     );
