@@ -131,7 +131,7 @@ class App extends Component {
     //   chapter: data1
     // }
     console.log(data2);
-    console.log(data1.document);
+    //console.log(data1.document);
     axios({
       method: "post",
       url: "http://localhost:5000/time",
