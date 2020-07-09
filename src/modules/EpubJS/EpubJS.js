@@ -15,11 +15,16 @@ class EpubJS extends Component {
     this.viewerRef = React.createRef();
     this.location = props.location;
     this.book = this.rendition = this.prevPage = this.nextPage = null;
+    this.content = null;
   }
 
   componentDidMount() {
     this.initBook(true);
     document.addEventListener("keyup", this.handleKeyPress, false);
+    // console.log("Before fetching from server");
+    // fetch('http://localhost:5000/time').then(res => res.json()).then(data => {
+    //   console.log(data);
+    // });
   }
 
   initBook(first) {
@@ -91,7 +96,7 @@ class EpubJS extends Component {
     };
     this.rendition.on("locationChanged", this.onLocationChange);
     this.rendition.on("keyup", this.handleKeyPress);
-    getRendition && getRendition(this.rendition);
+    getRendition && getRendition(this.rendition, this.book.spine);
   }
 
   onLocationChange = loc => {

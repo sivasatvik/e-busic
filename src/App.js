@@ -11,6 +11,7 @@ import {
   ButtonWrapper,
   GenericButton
 } from "./Components";
+import axios from "axios";
 
 const storage = global.localStorage || null;
 
@@ -61,6 +62,7 @@ class App extends Component {
       //TODO largeText: false
     };
     this.rendition = null;
+    this.spine = null;
   }
 
   // Function to toggle full screen
@@ -90,9 +92,77 @@ class App extends Component {
     );
   };
 
-  getRendition = rendition => {
+  getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+  };
+
+  getRendition = (rendition, spine) => {
     this.rendition = rendition;
+    this.spine = spine;
+    console.log(spine.get("chapter_010.xhtml"));
     rendition.themes.fontSize("100%");
+
+    //Server stuff
+    var data = {
+      chapter: "hello"
+    };
+    var data1 = spine.get("chapter_010.xhtml");
+
+    var seen = [];
+    var data2 = JSON.stringify(data1, function(key, val) {
+      if (val != null && typeof val == "object") {
+        if (seen.indexOf(val) >= 0) {
+          return;
+        }
+        seen.push(val);
+      }
+      return val;
+    });
+    // var data2 = {
+    //   chapter: data1
+    // }
+    console.log(data2);
+    console.log(data1.document);
+    axios({
+      method: "post",
+      url: "http://localhost:5000/time",
+      data: data2,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-type": "application/json"
+      }
+    })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    // console.log(data);
+    // var url = 'http://localhost:5000/time';
+    // axios.post(url, data, {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //   }
+    // })
+    // .then(function(response) {
+    //   console.log(response);
+    // })
+    // .catch(function(error) {
+    //   console.log(error);
+    // })
+    // fetch('http://localhost:5000/time').then(res => res.json()).then(data => {
+    //   console.log(data);
+    // });
   };
 
   // Function to handle file upload by user

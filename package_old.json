@@ -1,26 +1,19 @@
 {
   "name": "e-busic-reader",
   "version": "0.0.1",
-  "description": "A epub-reader with music using ePubJS",
-  "main": "lib/index.js",
+  "description": "An epub-reader with music using ePubJS",
+  "main": "index.js",
   "scripts": {
-    "compile": "SET NODE_ENV=production & babel --out-dir lib src/modules",
+    "compile": "NODE_ENV=production babel --out-dir lib src/modules",
     "prepare": "npm run compile",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "cd server && venv\\Scripts\\flask run --no-debugger",
     "deploy": "gh-pages-deploy",
     "clean-source": "rimraf lib src public .babelrc .eslintrc .npmignore package.json README.md",
     "precommit": "pretty-quick --staged",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "eslint -c .eslintrc src"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sivasatvik/e-busic.git"
-  },
-  "author": "Siva Satvik",
-  "license": "ISC",
   "standard": {
     "parser": "babel-eslint"
   },
@@ -32,10 +25,6 @@
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",
     "cross-env": "^7.0.2",
-    "gh-pages-deploy": "^0.5.1",
-    "husky": "^3.1.0",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-file-reader-input": "^2.0.0",
@@ -45,28 +34,22 @@
     "styled-components-breakpoint": "^2.1.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "epubjs": "^0.3.87",
+    "epubjs": "^0.3.85",
     "prop-types": "^15.7.2",
     "react-swipeable": "^5.5.0"
   },
   "peerDependencies": {
     "react": ">=16.12.0"
   },
-  "gh-pages-deploy": {
-    "staticpath": "build",
-    "prep": [
-      "build"
-    ],
-    "post": [
-      "clean-source"
-    ],
-    "noprompt": false
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivasatvik/e-busic.git"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "author": "Siva Satvik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sivasatvik/e-busic/issues"
+  },
+  "homepage": "https://github.com/sivasatvik/e-busic#readme"
 }
