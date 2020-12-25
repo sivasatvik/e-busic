@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Epub from "epubjs/lib/index";
 import defaultStyles from "./style";
+import axios from "axios";
 
 global.ePub = Epub; // Fix for v3 branch of epub.js -> needs ePub to by a global var
 
@@ -96,7 +97,8 @@ class EpubJS extends Component {
     };
     this.rendition.on("locationChanged", this.onLocationChange);
     this.rendition.on("keyup", this.handleKeyPress);
-    getRendition && getRendition(this.rendition, this.book.spine);
+    this.rendition.on("rendered", this.getContent);
+    getRendition && getRendition(this.rendition);
   }
 
   onLocationChange = loc => {
@@ -106,6 +108,27 @@ class EpubJS extends Component {
       this.location = newLocation;
       locationChanged && locationChanged(newLocation);
     }
+  };
+
+  getContent = section => {
+    var curChapter = this.rendition.getContents()[0].content.textContent;
+    console.log(curChapter);
+    //Server stuff
+    axios({
+      method: "post",
+      url: "http://localhost:5000/time",
+      data: curChapter,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-type": "application/json"
+      }
+    })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   renderBook() {

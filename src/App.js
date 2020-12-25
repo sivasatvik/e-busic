@@ -11,7 +11,6 @@ import {
   ButtonWrapper,
   GenericButton
 } from "./Components";
-import axios from "axios";
 
 const storage = global.localStorage || null;
 
@@ -105,20 +104,22 @@ class App extends Component {
     };
   };
 
-  getRendition = (rendition, spine) => {
+  getRendition = rendition => {
     this.rendition = rendition;
-    this.spine = spine;
-    console.log(spine.get("chapter_010.xhtml"));
+    /*this.spine = spine;
+    console.log("Here qm");
+    console.log(rendition.hooks.content);
+    console.log(spine.hooks.content);
+    //console.log(spine.get(3).output);
+    //console.log(spine.get("chapter_001.xhtml").output);
     rendition.themes.fontSize("100%");
 
     //Server stuff
-    var data = {
-      chapter: "hello"
-    };
-    var data1 = spine.get("chapter_010.xhtml");
+    var data1 = spine.get(3);
+    console.table(data1);
 
     var seen = [];
-    var data2 = JSON.stringify(data1, function(key, val) {
+    var data2 = JSON.stringify(spine.get(3), function(key, val) {
       if (val != null && typeof val == "object") {
         if (seen.indexOf(val) >= 0) {
           return;
@@ -162,7 +163,7 @@ class App extends Component {
     // })
     // fetch('http://localhost:5000/time').then(res => res.json()).then(data => {
     //   console.log(data);
-    // });
+    // });*/
   };
 
   // Function to handle file upload by user
