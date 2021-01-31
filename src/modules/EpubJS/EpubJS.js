@@ -77,11 +77,6 @@ class EpubJS extends Component {
       height: "100%",
       ...epubOptions
     });
-    this.rendition.display(
-      typeof location === "string" || typeof location === "number"
-        ? location
-        : toc[0].href
-    );
 
     this.prevPage = () => {
       this.rendition.prev();
@@ -89,9 +84,25 @@ class EpubJS extends Component {
     this.nextPage = () => {
       this.rendition.next();
     };
-    this.rendition.on("locationChanged", this.onLocationChange);
-    this.rendition.on("keyup", this.handleKeyPress);
+    this.registerEvents();
     getRendition && getRendition(this.rendition);
+
+    if (typeof location === "string" || typeof location === "number") {
+      this.rendition.display(location);
+    } else if (toc.length > 0 && toc[0].href) {
+      this.rendition.display(toc[0].href);
+    } else {
+      this.rendition.display();
+    }
+  }
+
+  registerEvents() {
+    const { handleKeyPress, handleTextSelected } = this.props;
+    this.rendition.on("locationChanged", this.onLocationChange);
+    this.rendition.on("keyup", handleKeyPress || this.handleKeyPress);
+    if (handleTextSelected) {
+      this.rendition.on("selected", handleTextSelected);
+    }
   }
 
   onLocationChange = loc => {
@@ -145,7 +156,9 @@ EpubJS.propTypes = {
   styles: PropTypes.object,
   epubInitOptions: PropTypes.object,
   epubOptions: PropTypes.object,
-  getRendition: PropTypes.func
+  getRendition: PropTypes.func,
+  handleKeyPress: PropTypes.func,
+  handleTextSelected: PropTypes.func
 };
 
 export default EpubJS;

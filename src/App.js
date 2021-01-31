@@ -57,10 +57,33 @@ class App extends Component {
           ? storage.getItem("epub-location")
           : 2,
       localFile: null,
-      localName: null
+      localName: null,
+      selectedTrack: "/music/bensound-relaxing.mp3", //TODO: Change selectedTrack logic
+      playing: 0
       //TODO largeText: false
     };
+    this.audioTune = new Audio("/music/bensound-relaxing.mp3"); //Default Hardcoded
     this.rendition = null;
+  }
+
+  componentDidMount() {
+    this.audioTune.load();
+  }
+
+  componentWillUnmount() {
+    this.audioTune.stop();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.playing);
+    console.log(this.state.selectedTrack);
+    if (this.state.playing !== prevState.playing) {
+      if (this.state.playing) {
+        this.audioTune.play();
+      } else if (!this.state.playing) {
+        this.audioTune.pause();
+      }
+    }
   }
 
   // Function to toggle full screen
@@ -110,6 +133,18 @@ class App extends Component {
     }
   };
 
+  handleMusic = () => {
+    this.setState({ playing: !this.state.playing });
+  };
+
+  handleCycleMusic = () => {
+    this.audioTune.src = this.state.selectedTrack; //TODO: Change selectedTrack logic
+    this.audioTune.load();
+    if (this.state.playing) {
+      this.audioTune.play();
+    }
+  };
+
   // Render function
   render() {
     const { fullscreen, location, localFile, localName } = this.state;
@@ -121,6 +156,20 @@ class App extends Component {
             <FileReaderInput as="buffer" onChange={this.handleFileChange}>
               <GenericButton> Upload file </GenericButton>
             </FileReaderInput>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <GenericButton onClick={this.handleMusic}>
+              {" "}
+              {this.state.playing ? "Pause" : "Play"} music{" "}
+            </GenericButton>
+            {/* <audio ref={ref => (this.player = ref)} /> */}
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <GenericButton onClick={this.handleCycleMusic}>
+              {" "}
+              Cycle music{" "}
+            </GenericButton>
+            {/* <audio ref={ref => (this.player = ref)} /> */}
           </ButtonWrapper>
         </ToolBar>
         <ReaderContainer fullscreen={fullscreen}>

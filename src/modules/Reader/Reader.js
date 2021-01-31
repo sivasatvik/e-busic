@@ -111,7 +111,7 @@ class Reader extends PureComponent {
         style={Object.assign(
           {},
           styles.tocButton,
-          expandToc ? styles.tocButtonexpand : {}
+          expandToc ? styles.tocButtonExpand : {}
         )}
         onClick={this.toggleToc}
       >
@@ -142,7 +142,7 @@ class Reader extends PureComponent {
           style={Object.assign(
             {},
             styles.readerArea,
-            expandToc ? styles.containerexpand : {}
+            expandToc ? styles.containerExpand : {}
           )}
         >
           {showToc && this.renderTocToggle()}
